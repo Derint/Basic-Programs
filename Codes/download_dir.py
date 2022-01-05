@@ -3,6 +3,7 @@ import urllib.parse as urlparse
 import argparse
 from time import sleep
 
+
 l = 0
 n = 6
 
@@ -20,7 +21,7 @@ def extract_links_from(url):
 def crawl(url):
     global l
     href_links = extract_links_from(url)
-    print("\r\tGetting all the links : Found " + str(len(target_links)) + " Links " + '.'*l, end='')
+    print("\r\tGetting all the links (Found " + str(len(target_links)) + " Links) " + '.'*l, end='')
 
     for link in href_links:
         
@@ -35,7 +36,7 @@ def crawl(url):
 
         l+=1
         if l>n:
-            print("\r\tGetting all the links : Found " + str(len(target_links)) + " Links" + ' ' *(n+1) , end='')
+            print("\r\tGetting all the links (Found " + str(len(target_links)) + " Links)" + ' ' *(n+1) , end='')
             l=1
             
 def check_sentence(sentence):
@@ -72,8 +73,6 @@ def saveFile(url, path, chuckSize=1024, char='#'):
 
 def isEmpty(path): # From stackoverflow
     if os.path.exists(path) and not os.path.isfile(path):
-  
-        # Checking if the directory is empty or not
         if not os.listdir(path):
             os.rmdir(path)
         else:pass
@@ -92,10 +91,14 @@ file_url = args.url
 ext = ['html', 'json', 'py', 'java', 'c', 'dat', 'dat', 'dir', 
  'exe', 'apk', 'docx', 'pptx', 'txt', 'pdf', 'jpg', 'png', 'JPEG'
  'doc', 'bak', 'mp3', 'mp4', 'wav', 'html', 'css', 'zip', 'ipynb'
- 'deb', 'xz']
+ 'deb', 'xz', 'csv', 'xlsx', 'xls', 'db', 'jiff', '7z', 'rar', 
+ 'webp', 'sql', 'djvu', 'TXT', 'opus']
 
 if file_url is None:
     file_url = input("Enter the URL: ").strip()
+
+if 'http://' not in file_url:
+    file_url = 'http://' + file_url
 
 if not file_url.endswith('/') and file_url.split('.')[-1] not in ext:
     file_url += '/'
@@ -115,9 +118,7 @@ for i in target_links:
     
     if check_dir:
         if file_ext not in ext:
-            if file_ext not in uk_ext:
-                uk_ext.append(file_ext)
-
+            if file_ext not in uk_ext: uk_ext.append(file_ext)
             fold_name = check_sentence("/".join(f_name.split('/')))
                                                 
         s.add(fold_name)

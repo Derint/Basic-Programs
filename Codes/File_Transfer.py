@@ -2,8 +2,6 @@
 # coding: utf-8
 
 
-from operator import index
-from tabnanny import check
 import requests
 import re
 import os
